@@ -1,12 +1,9 @@
 from flask import Flask, render_template, jsonify
 from datetime import datetime
 import yfinance as yf
-from google.cloud import firestore
-from google.cloud import secretmanager
 import pytz
 
 app = Flask(__name__)
-db = firestore.Client()
 
 
 def get_btc_data():
@@ -19,9 +16,6 @@ def get_btc_data():
             'low': btc.info['dayLow'],
             'volume': btc.info['volume']
         }
-        # Store data in Firestore
-        doc_ref = db.collection('btc_data').document(datetime.now(pytz.UTC).strftime("%Y-%m-%d %H:%M:%S"))
-        doc_ref.set(data)
         return data
     except Exception as e:
         app.logger.error(f"Error fetching BTC data: {str(e)}")

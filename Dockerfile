@@ -17,9 +17,6 @@ COPY requirements.txt ./
 # Install dependencies.
 RUN pip install -r requirements.txt
 
-# Install numpy and TA-Lib Python wrapper
-RUN pip install numpy==1.21.0
-
 # Run the web service on container startup.
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
 

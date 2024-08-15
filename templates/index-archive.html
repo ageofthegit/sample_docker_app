@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BTC Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Latest BTC Data</h1>
+    <p>Last updated: <span id="last-updated"></span></p>
+    <table id="btc-data">
+        <tr>
+            <th>PrevClose</th>
+            <th>Open</th>
+            <th>DayHigh</th>
+            <th>DayLow</th>
+            <th>Volume</th>
+        </tr>
+        <tr id="btc-values"></tr>
+    </table>
+
+    <script>
+        function updateBtcData() {
+            $.get("/get_btc_data", function(data) {
+                $('#last-updated').text(data.timestamp);
+                var btcData = data.btc_data;
+                var rowHtml = "";
+                rowHtml += "<td>" + btcData.prevclose.toFixed(2) + "</td>";
+                rowHtml += "<td>" + btcData.open.toFixed(2) + "</td>";
+                rowHtml += "<td>" + btcData.high.toFixed(2) + "</td>";
+                rowHtml += "<td>" + btcData.low.toFixed(2) + "</td>";
+                rowHtml += "<td>" + btcData.volume.toFixed(2) + "</td>";
+                $('#btc-values').html(rowHtml);
+            });
+        }
+
+        // Update immediately and then every minute
+        updateBtcData();
+        setInterval(updateBtcData, 60000);
+    </script>
+</body>
+</html>

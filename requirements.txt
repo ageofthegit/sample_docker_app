@@ -1,0 +1,12 @@
+Flask==3.0.1
+gunicorn==22.0.0
+requests==2.32.0
+structlog==24.1.0
+google-auth==2.3.2
+pytz==2024.1
+google-auth-oauthlib==0.4.6
+google-auth-httplib2==0.1.0
+google-api-python-client==2.33.0
+yfinance==0.2.36
+google-cloud-firestore==2.11.1
+
